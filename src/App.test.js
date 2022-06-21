@@ -7,4 +7,5 @@ test('renders learn react link', () => {
   const linkElement = screen.getByText(/Convert USD to TTT/i);
 
   expect(linkElement).toBeInTheDocument();
+  
 });
