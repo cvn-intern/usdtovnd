@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+
+body{
+  font-family: 'Quicksand', sans-serif;
+  background-color: #d8d5db;
+  box-sizing: border-box;
+}
+
+.container{
+    margin: 100px;
+}
+.titleApp{
+  text-align: center;
+}
+
+.convert{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 120px 100px;
+}
+
+.convert__box{
+    width: 30%;
+    height: 200px;
+    background-color: #2d3142;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 2px 3px 10px ;
+}
+.currency{
+    color: #eae8ff;
+}
+
+.convert-input{
+    width: 60%;
+    margin: 20px;
+    height: 30px;
+    background-color: #d8d5db;
+    border-radius: 12px;
+}
+.convert__submit{
+    margin: auto;
+    display: block;
+    width: 20%;
+}
