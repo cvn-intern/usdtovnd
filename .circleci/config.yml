@@ -18,6 +18,8 @@ jobs:
       - checkout
       - run: npm install
       - run: npm run eslint
+      - run: npm run eslint -- --fix
+
 
 
   # Deploy with Surge task
