@@ -32,9 +32,9 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      # - eslint:
-      #     requires:
-      #         - build
+      - eslint:
+          requires:
+              - build
       - deploy:
           requires:
               - build
