@@ -16,7 +16,7 @@ jobs:
     steps:
       - checkout
       - run: npm install --save-dev surge
-      - run: ./node_modules/surge/lib/cli.js --project C:\Users\phant\OneDrive\Desktop\PJ\usdtovnd\build --domain bozuman-usdtovnd.surge.sh
+      - run: ./node_modules/surge/lib/cli.js --project ./src --domain bozuman-usdtovnd.surge.sh
 workflows:
   build-and-deploy:
     jobs:
