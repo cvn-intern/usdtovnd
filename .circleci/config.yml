@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  # build task
+  # install and testing task
   build:
     docker:
       - image: cimg/node:17.9.1
