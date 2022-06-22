@@ -17,7 +17,7 @@ function App() {
   }
 
   function handleSubmit1(){
-    setVnd(usd*23.227);
+    setVnd(usd*50);
   } 
 
   function handleSubmit2(){
@@ -27,7 +27,7 @@ function App() {
 
   return (
     <div className="container">
-        {/* <h1 className="titleApp">Convert USD to VND</h1> */}
+        <h1 className="titleApp">Convert USD to VND</h1>
 
         <div className='convert'>
 
