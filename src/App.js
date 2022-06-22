@@ -17,7 +17,7 @@ function App() {
   }
 
   function handleSubmit1(){
-    setVnd(usd*50);
+    setVnd(usd*23.227);
   } 
 
   function handleSubmit2(){
