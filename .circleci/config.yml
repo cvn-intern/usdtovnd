@@ -16,6 +16,7 @@ jobs:
       - image: cimg/node:17.9.1
     steps:
       - checkout
+      - run: npm install
       - run: npm run eslint
 
 
