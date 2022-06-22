@@ -3,7 +3,7 @@ jobs:
   # build task
   build:
     docker:
-      - image: circleci/node:16.15.1
+      - image: circleci/node:17.9.1
     steps:
       - checkout
       - run: npm install
@@ -12,7 +12,7 @@ jobs:
   # Deploy with Surge task
   deploy:
     docker:
-      - image: circleci/node:16.15.1
+      - image: circleci/node:17.9.1
     steps:
       - checkout
       - run: npm install --save-dev surge
@@ -20,7 +20,7 @@ jobs:
 workflows:
   build-and-deploy:
     jobs:
-      - build:
+      - build
       - deploy:
           requires:
               - build
