@@ -43,20 +43,4 @@ workflows:
               - eslint
 
 
-
-
-
-
-
-
-
-              
-      # - run: actions/checkout@v2
-      # - run: npm ci
-      # - run: |
-      #     npm link
-      #     npm link @jsdevtools/eslint-config-modular
-      # - run: npm run lint
-
-
       
