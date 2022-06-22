@@ -1,4 +1,153 @@
 version: 2.1
+
+# This code is licensed from CircleCI to the user under the MIT license.
+# See here for details: https://circleci.com/developer/orbs/licensing
+version: 2.1
+orbs:
+    utils: arrai/utils@1.10.0
+commands:
+    upgrade_npm:
+        steps:
+            - run:
+                  name: "Install the latest npm"
+                  command: |
+                      if [ "$(which npm)" = "/usr/local/bin/npm" ]; then
+                          sudo npm install -g --upgrade npm
+                      else
+                          npm install -g --upgrade npm
+                      fi
+
+    install_eslint:
+        steps:
+            - run:
+                  name: "Install the latest eslint"
+                  command: |
+                      if [ "$(which npm)" = "/usr/local/bin/npm" ]; then
+                          sudo npm install -g eslint
+                      else
+                          npm install -g eslint
+                      fi
+jobs:
+    eslint:
+        parameters:
+            wd:
+                description: "The working directory for this job."
+                type: string
+                default: ~/project
+            files:
+                description: "Files/Directories to lint."
+                type: string
+                default: lib/**
+            executor:
+                description: "The executor to use for the job."
+                type: executor
+                default: v16
+            resource_class:
+                description: "The resource class to use for the job."
+                type: enum
+                enum: [small, medium, medium+, large, xlarge, 2xlarge, 2xlarge+]
+                default: small
+            setup:
+                description: "Any additional setup steps."
+                type: steps
+                default: []
+            config:
+                description: "Any additional configuration steps."
+                type: steps
+                default: []
+            create_badges:
+                description: "Generate badges."
+                type: boolean
+                default: true
+        executor: <<parameters.executor>>
+        resource_class: <<parameters.resource_class>>
+        steps:
+            - checkout
+            - steps: <<parameters.setup>>
+            - upgrade_npm
+            - install_eslint
+            - utils/add_npm_config
+            - steps: <<parameters.config>>
+            - run:
+                  name: Run eslint
+                  command: |
+                      cd <<parameters.wd>>
+                      eslint --color <<parameters.files>> | tee ~/lint
+            - when:
+                  condition: <<parameters.create_badges>>
+                  steps:
+                      - run:
+                            name: Install additional OS packages
+                            command: |
+                                sudo apt update
+                                sudo apt install rsync
+                      - utils/add_ssh_config
+                      - utils/make_status_shield:
+                            when: on_fail
+                            status: errors
+                            color: red
+                            logo: eslint
+            - run:
+                  name: Check if we had any warnings
+                  when: always
+                  command: test ! -s ~/lint
+            - when:
+                  condition: <<parameters.create_badges>>
+                  steps:
+                      - utils/make_status_shield:
+                            when: always
+                            status: warnings
+                            color: orange
+                            logo: eslint
+                            preserve: true
+                      - utils/make_status_shield:
+                            when: on_success
+                            status: passed
+                            color: brightgreen
+                            logo: eslint
+                      - utils/rsync_file:
+                            when: always
+                            file: ~/status.svg
+                            remote_file: $CIRCLE_BRANCH/$CIRCLE_JOB.svg
+                            host: docs
+executors:
+    lts:
+        environment:
+            LANG: en_US.UTF-8
+        docker:
+            - image: cimg/node:lts
+    current:
+        environment:
+            LANG: en_US.UTF-8
+        docker:
+            - image: cimg/node:current
+    v10:
+        environment:
+            LANG: en_US.UTF-8
+        docker:
+            - image: cimg/node:10.24
+    v12:
+        environment:
+            LANG: en_US.UTF-8
+        docker:
+            - image: cimg/node:12.22
+    v14:
+        environment:
+            LANG: en_US.UTF-8
+        docker:
+            - image: cimg/node:14.19
+    v16:
+        environment:
+            LANG: en_US.UTF-8
+        docker:
+            - image: cimg/node:16.15
+    v18:
+        environment:
+            LANG: en_US.UTF-8
+        docker:
+            - image: cimg/node:18.2
+
+
 jobs:
   # build task
   build:
@@ -9,21 +158,6 @@ jobs:
       - run: npm install
       - run: npm run test
 
-
-  eslint:
-    docker:
-      - image: cimg/node:17.9.1
-    steps:
-      - checkout
-      - run:
-          name: Install the latest eslint
-          command: |
-            if [ "$(which npm)" = "/usr/local/bin/npm" ]; then
-                sudo npm install -g eslint
-            else
-                npm install -g eslint
-            fi
-
   # Deploy with Surge task
   deploy:
     docker:
@@ -32,6 +166,8 @@ jobs:
       - checkout
       - run: npm install --save-dev surge
       - run: ./node_modules/surge/lib/cli.js --project ./ --domain bozuman-usdtovnd.surge.sh
+
+
 workflows:
   build-and-deploy:
     jobs:
