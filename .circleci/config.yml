@@ -19,7 +19,7 @@ jobs:
 workflows:
   build-and-deploy:
     jobs:
-      - build
+      - build:
       - deploy:
           requires:
               - build
@@ -30,13 +30,5 @@ workflows:
       #     npm link @jsdevtools/eslint-config-modular
       # - run: npm run lint
 
-# jobs:
-#   build:
-#     steps:
-#       - run: actions/checkout@v2
-#       - run: npm ci
-#       - run: |
-#           npm link
-#           npm link @jsdevtools/eslint-config-modular
-#       - run: npm run lint
+
       
