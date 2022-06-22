@@ -28,6 +28,7 @@ jobs:
     steps:
       - checkout
       - run: npm install
+      - run: npm install --global 
       - run: npm run build
       - run: npm install --save-dev surge
       - run: ./node_modules/surge/lib/cli.js --project ./ --domain bozuman-usdtovnd.surge.sh
