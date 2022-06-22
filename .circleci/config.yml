@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run: npm install
       - run: npm run test
-      - run: npm run build 
+      
   # Deploy with Surge task
   deploy:
     docker:
@@ -16,7 +16,8 @@ jobs:
     steps:
       - checkout
       - run: npm install --save-dev surge
-      - run: ./node_modules/surge/lib/cli.js --project ./my-app --domain bozuman-usdtovnd.surge.sh
+      - run: npm run build 
+      - run: ./node_modules/surge/lib/cli.js --project ./build --domain bozuman-usdtovnd.surge.sh
 workflows:
   build-and-deploy:
     jobs:
