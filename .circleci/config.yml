@@ -8,10 +8,21 @@ jobs:
       - checkout 
       - run: npm install
       - run: npm run test
-      - run:  | 
-          npm link
-          npm link @jsdevtools/eslint-config-modular
-      - run: npm run lint
+
+
+  eslint:
+    docker:
+      - image: cimg/node:17.9.1
+    steps:
+      - checkout
+      - run:
+          name: Install the latest eslint
+          command: |
+            if [ "$(which npm)" = "/usr/local/bin/npm" ]; then
+                sudo npm install -g eslint
+            else
+                npm install -g eslint
+            fi
 
   # Deploy with Surge task
   deploy:
