@@ -1,18 +1,34 @@
 version: 2.1
 jobs:
+  # build task
   build:
     docker:
-      - image: cimg/node:14.15.1
+      - image: circleci/node:16.15.1
     steps:
       - checkout
       - run: npm install
       - run: npm run test
-      - run: actions/checkout@v2
-      - run: npm ci
-      - run: |
-          npm link
-          npm link @jsdevtools/eslint-config-modular
-      - run: npm run lint
+  # Deploy with Surge task
+  deploy:
+    docker:
+      - image: circleci/node:16.15.1
+    steps:
+      - checkout
+      - run: npm install --save-dev surge
+      - run: ./node_modules/surge/lib/cli.js --project ./ --domain bozuman-usdtovnd.surge.sh
+workflows:
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+              - build
+      # - run: actions/checkout@v2
+      # - run: npm ci
+      # - run: |
+      #     npm link
+      #     npm link @jsdevtools/eslint-config-modular
+      # - run: npm run lint
 
 # jobs:
 #   build:
