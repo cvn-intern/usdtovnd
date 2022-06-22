@@ -11,7 +11,7 @@ jobs:
       - run:  | 
           npm link
           npm link @jsdevtools/eslint-config-modular
-      - - run: npm run lint
+      - run: npm run lint
 
   # Deploy with Surge task
   deploy:
