@@ -8,8 +8,11 @@ jobs:
       - checkout 
       - run: npm install
       - run: npm run test
-      - run: npm link
-      - run: npx eslint App.js
+
+      - run: |
+          npm link
+          link @jsdevtools/eslint-config-modular
+      - run: npm run lint
 
 
   # Deploy with Surge task
