@@ -16,7 +16,7 @@ jobs:
       - image: cimg/node:17.9.1
     steps:
       - checkout
-      - npm run eslint
+      - run: npm run eslint
 
 
   # Deploy with Surge task
