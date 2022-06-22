@@ -8,7 +8,10 @@ jobs:
       - checkout 
       - run: npm install
       - run: npm run test
+      - run: npm link
       - run: npx eslint App.js
+
+
   # Deploy with Surge task
   deploy:
     docker:
