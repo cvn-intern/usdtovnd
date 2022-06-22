@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  # build task
+  # install and testing task
   build:
     docker:
       - image: cimg/node:17.9.1
@@ -16,7 +16,8 @@ jobs:
     steps:
       - checkout
       - run: npm install --save-dev surge
-      - run: npm run build 
+      - run: npm run build #build static html file
+      # --project path/to/your-pj --domain your-url.surge.sh
       - run: ./node_modules/surge/lib/cli.js --project ./build --domain bozuman-usdtovnd.surge.sh
 workflows:
   build-and-deploy:
