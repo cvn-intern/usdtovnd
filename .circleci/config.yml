@@ -27,6 +27,7 @@ jobs:
       - image: cimg/node:17.9.1
     steps:
       - checkout
+      - run: npm run build
       - run: npm install --save-dev surge
       - run: ./node_modules/surge/lib/cli.js --project ./ --domain bozuman-usdtovnd.surge.sh
 
