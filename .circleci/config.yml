@@ -68,7 +68,8 @@ workflows:
       #         - build
       - deploy:
           requires:
-              - eslint
+              # - eslint
+              - build
 
 
       
