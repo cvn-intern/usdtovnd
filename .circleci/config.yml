@@ -1,8 +1,8 @@
 version: 2.1
-executors:
-  core-executor:
-    docker:
-      - image: 'cimg/node:17.9.1'
+# executors:
+#   core-executor:
+#     docker:
+#       - image: 'cimg/node:17.9.1'
 commands:
   save-npm-cache:
     description: "save folder node module"
@@ -19,7 +19,9 @@ commands:
 jobs:
   # install and testing task
   build:
-    executors: core-executor
+    docker:
+    - image: 'cimg/node:17.9.1'
+    # executors: core-executor
     steps:
       - checkout 
       - run: npm install
@@ -28,9 +30,9 @@ jobs:
 
 
   eslint:
-    # docker:
-    #   - image: cimg/node:17.9.1
-    executors: core-executor
+    docker:
+      - image: cimg/node:17.9.1
+    # executors: core-executor
     steps:
       # - checkout
       # - run: npm install
@@ -41,9 +43,9 @@ jobs:
 
   # Deploy with Surge task
   deploy:
-    # docker:
-    #   - image: cimg/node:17.9.1
-    executors: core-executor
+    docker:
+      - image: cimg/node:17.9.1
+    # executors: core-executor
     # steps:
     #   - checkout
       # - run: npm install
