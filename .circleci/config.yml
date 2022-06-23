@@ -31,9 +31,8 @@ jobs:
       - run: npm install
       - run: npm install --global 
       - run: npm run build
-      - run: cd build
       - run: npm install -g surge
-      - run: ./node_modules/surge/lib/cli.js --project ./ --domain bozuman-usdtovnd.surge.sh
+      - run: ./node_modules/surge/lib/cli.js --project ./build --domain bozuman-usdtovnd.surge.sh
 
 
 workflows:
