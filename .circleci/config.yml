@@ -5,19 +5,19 @@ version: 2.1
 #       - image: 'cimg/node:17.9.1'
 commands:
   save-npm-cache:
-    description: "save folder node module"
+    description: "save folder node modules"
     steps:
       - save_cache:
-          key: -v1-
+          key: -v2-
           paths:
             - node_modules
   restore-npm-cache:
-    description: "restore folder node module"
+    description: "restore folder node modules"
     steps:
       - restore_cache:
           keys:
-            - -v1-{{ checksum "package-lock.json" }}
-            - -v1-
+            - -v2-{{ checksum "package-lock.json" }}
+            - -v2-
 
 jobs:
   # install and testing task
