@@ -15,7 +15,10 @@ commands:
     description: "restore folder node module"
     steps:
       - restore_cache:
-          keys: -v1-
+          keys:
+            - -v1-{{ checksum "package-lock.json" }}
+            - -v1-
+
 jobs:
   # install and testing task
   build:
