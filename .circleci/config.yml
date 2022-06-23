@@ -1,22 +1,40 @@
 version: 2.1
-
+executors:
+  core-executor:
+    docker:
+      - image: cimg/node:17.9.1
+commands:
+  save-npm-cache:
+    description: "save folder node module"
+    steps:
+      -save-cache:
+        key: -v1-
+        path:
+          - node_module
+  restore-npm-cache:
+    description: "restore folder node module"
+    steps:
+      -restore-cache:
+        key: -v1-
 jobs:
   # install and testing task
   build:
-    docker:
-      - image: cimg/node:17.9.1
+    executors: core-executor
     steps:
       - checkout 
       - run: npm install
+      - save-npm-cache
       - run: npm run test
 
 
   eslint:
     # docker:
     #   - image: cimg/node:17.9.1
+    executors: core-executor
     steps:
       # - checkout
       # - run: npm install
+      - restore-npm-cache
       - run: npm run eslint -- --fix
 
 
@@ -25,11 +43,13 @@ jobs:
   deploy:
     # docker:
     #   - image: cimg/node:17.9.1
+    executors: core-executor
     # steps:
     #   - checkout
       # - run: npm install
       # - run: npm install --global 
-      - run: npm install --save-dev surge
+      # - run: npm install --save-dev surge
+      - restore-npm-cache
       - run: npm run build
       - run: ./node_modules/surge/lib/cli.js --project ./ --domain bozuman-usdtovnd.surge.sh
 
