@@ -2,7 +2,7 @@ version: 2.1
 executors:
   core-executor:
     docker:
-      - image: cimg/node:17.9.1
+      - image: 'cimg/node:17.9.1'
 commands:
   save-npm-cache:
     description: "save folder node module"
