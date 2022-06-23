@@ -10,7 +10,7 @@ commands:
       - save_cache:
           key: -v1-
           paths:
-            - ./node_module
+            - node_module
   restore-npm-cache:
     description: "restore folder node module"
     steps:
@@ -41,6 +41,7 @@ jobs:
       # - run: npm install
       - restore-npm-cache
       - run: npm run eslint -- --fix
+      # - save-npm-cache
 
 
 
@@ -63,13 +64,9 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      # - eslint:
-      #     requires:
-      #         - build
+      - eslint:
+          requires:
+              - build
       - deploy:
           requires:
-              # - eslint
-              - build
-
-
-      
+              - eslint
