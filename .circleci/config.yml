@@ -49,7 +49,7 @@ jobs:
     docker:
       - image: cimg/node:17.9.1
     # executors: core-executor
-    # steps:
+    steps:
     #   - checkout
       # - run: npm install
       # - run: npm install --global 
