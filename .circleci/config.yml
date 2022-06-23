@@ -11,6 +11,7 @@ jobs:
       - run: npm run test
 
 
+  # check code formating
   eslint:
     docker:
       - image: cimg/node:17.9.1
