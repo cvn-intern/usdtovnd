@@ -37,7 +37,7 @@ jobs:
       - image: cimg/node:17.9.1
     # executors: core-executor
     steps:
-      # - checkout
+      - checkout
       # - run: npm install
       - restore-npm-cache
       - run: npm run eslint -- --fix
@@ -50,7 +50,7 @@ jobs:
       - image: cimg/node:17.9.1
     # executors: core-executor
     steps:
-    #   - checkout
+      - checkout
       # - run: npm install
       # - run: npm install --global 
       # - run: npm install --save-dev surge
