@@ -52,7 +52,7 @@ jobs:
       - checkout
       - restore-npm-cache
       - run: npm run build
-      - run: ./node_modules/surge/lib/cli.js --project ./ --domain bozuman-usdtovnd.surge.sh
+      - run: ./node_modules/surge/lib/cli.js --project ./build --domain bozuman-usdtovnd.surge.sh
 
 
 
