@@ -10,7 +10,7 @@ commands:
       - save_cache:
           key: -v1-
           paths:
-            - node_module
+            - node_modules
   restore-npm-cache:
     description: "restore folder node module"
     steps:
