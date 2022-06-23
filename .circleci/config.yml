@@ -26,7 +26,8 @@ jobs:
     - image: 'cimg/node:17.9.1'
     # executors: core-executor
     steps:
-      - checkout 
+      - checkout
+      - restore-npm-cache
       - run: npm install
       - save-npm-cache
       - run: npm run test
