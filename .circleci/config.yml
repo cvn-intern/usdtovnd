@@ -16,7 +16,7 @@ jobs:
       - image: cimg/node:17.9.1
     steps:
       - checkout
-      - run: npm install
+      # - run: npm install
       - run: npm run eslint -- --fix
 
 
@@ -27,10 +27,10 @@ jobs:
       - image: cimg/node:17.9.1
     steps:
       - checkout
-      - run: npm install
-      - run: npm install --global 
-      - run: npm run build
+      # - run: npm install
+      # - run: npm install --global 
       - run: npm install --save-dev surge
+      - run: npm run build
       - run: ./node_modules/surge/lib/cli.js --project ./ --domain bozuman-usdtovnd.surge.sh
 
 
