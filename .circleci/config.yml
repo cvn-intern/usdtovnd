@@ -7,14 +7,14 @@ commands:
   save-npm-cache:
     description: "save folder node module"
     steps:
-      -save-cache:
+      -save_cache:
         key: -v1-
         path:
-          - node_module
+          - ./node_module
   restore-npm-cache:
     description: "restore folder node module"
     steps:
-      -restore-cache:
+      -restore_cache:
         key: -v1-
 jobs:
   # install and testing task
