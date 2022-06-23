@@ -12,10 +12,10 @@ jobs:
 
 
   eslint:
-    docker:
-      - image: cimg/node:17.9.1
+    # docker:
+    #   - image: cimg/node:17.9.1
     steps:
-      - checkout
+      # - checkout
       # - run: npm install
       - run: npm run eslint -- --fix
 
@@ -23,10 +23,10 @@ jobs:
 
   # Deploy with Surge task
   deploy:
-    docker:
-      - image: cimg/node:17.9.1
-    steps:
-      - checkout
+    # docker:
+    #   - image: cimg/node:17.9.1
+    # steps:
+    #   - checkout
       # - run: npm install
       # - run: npm install --global 
       - run: npm install --save-dev surge
