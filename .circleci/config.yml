@@ -30,7 +30,8 @@ jobs:
       - restore-npm-cache
       - run: npm install
       - save-npm-cache
-      - run: npm run eslint -- --fix
+      - run: npm run eslint
+      # - run: npm run eslint -- --fix
 
 
   # testing task
