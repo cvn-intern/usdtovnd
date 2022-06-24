@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState} from 'react';
-import './App.css';
+// import './App.css';
 import arrow from './imgs/arrow.jpg';
 import arrow1 from './imgs/arrow1.png';
 
