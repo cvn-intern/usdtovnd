@@ -28,7 +28,10 @@ jobs:
     steps:
       - checkout
       - restore-npm-cache
+      - run: npm install
+      - save-npm-cache
       - run: npm run eslint -- --fix
+
 
   # testing task
   build:
@@ -38,12 +41,7 @@ jobs:
     steps:
       - checkout 
       - restore-npm-cache
-      - run: npm install
-      - save-npm-cache
       - run: npm run test
-
-
-
 
 
   # Deploy with Surge task
