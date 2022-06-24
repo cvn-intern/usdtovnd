@@ -8,7 +8,7 @@ commands:
     description: "save folder node modules"
     steps:
       - save_cache:
-          key: -v2-
+          key: -v2-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
   restore-npm-cache:
@@ -18,9 +18,33 @@ commands:
           keys:
             - -v2-{{ checksum "package-lock.json" }}
             - -v2-
-
+  save-build-cache:
+    description: "save folder build"
+    steps:
+      - save_cache:
+          key: -v1-build{{ checksum "package-lock.json" }}
+          paths:
+            - build
+  restore-build-cache:
+    description: "restore folder build"
+    steps:
+      - restore_cache:
+          keys:
+            - -v1-build{{ checksum "package-lock.json" }}
+            - -v1-build
 jobs:
-  # check code formating and install
+  # install task
+  install:
+    docker:
+      - image: cimg/node:17.9.1
+    steps:
+      - checkout
+      - restore-npm-cache
+      - run: npm install
+      - save-npm-cache
+    
+
+  # check code formating
   eslint:
     docker:
       - image: cimg/node:17.9.1
@@ -28,21 +52,29 @@ jobs:
     steps:
       - checkout
       - restore-npm-cache
-      - run: npm install
-      - save-npm-cache
       - run: npm run eslint
       # - run: npm run eslint -- --fix
 
 
   # testing task
-  build:
+  unit-test:
     docker:
-    - image: 'cimg/node:17.9.1'
+      - image: 'cimg/node:17.9.1'
     # executors: core-executor
     steps:
       - checkout 
       - restore-npm-cache
       - run: npm run test
+
+  # build task
+  build:
+    docker:
+      - image: 'cimg/node:17.9.1'
+    steps:
+      - checkout 
+      - restore-npm-cache
+      - run: npm run build
+      - save-build-cache
 
 
   # Deploy with Surge task
@@ -53,7 +85,8 @@ jobs:
     steps:
       - checkout
       - restore-npm-cache
-      - run: npm run build
+      - restore-build-cache
+      # - run: npm run build
       - run: ./node_modules/surge/lib/cli.js --project ./build --domain bozuman-usdtovnd.surge.sh
 
 
