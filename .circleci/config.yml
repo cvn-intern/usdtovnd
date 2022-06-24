@@ -87,17 +87,27 @@ jobs:
       - restore-npm-cache
       - restore-build-cache
       # - run: npm run build
-      - run: ./node_modules/surge/lib/cli.js --project ./build --domain bozuman-usdtovnd.surge.sh
+      - run:
+          name: deploy to surge
+          commands: 
+            ./node_modules/surge/lib/cli.js --project ./build --domain bozuman-usdtovnd.surge.sh
 
 
 
 workflows:
   build-and-deploy:
     jobs:
-      - eslint
+      - install
+      - eslint:
+          requires:
+            - install
+      - unit-test:
+          requires:
+            - install
       - build:
           requires:
-              - eslint
+            - eslint
+            - unit-test
       - deploy:
           requires:
-              - build
+            - build
