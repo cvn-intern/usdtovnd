@@ -59,10 +59,10 @@ jobs:
 workflows:
   build-and-deploy:
     jobs:
-      - build
-      - eslint:
+      - eslint
+      - build:
           requires:
-              - build
+            - eslint
       - deploy:
           requires:
               - eslint
