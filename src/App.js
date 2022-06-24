@@ -33,7 +33,7 @@ function App() {
       <div className='convert'>
 
         <div className="convert__box">
-          <h3 className="currency">USDA</h3>
+          <h3 className="currency">USD</h3>
           <input className="convert-input" type="text" value={usd} onChange={e => handleSubmitusd(e.target.value)} placeholder="Number you want to convert"/>
         </div>
 
