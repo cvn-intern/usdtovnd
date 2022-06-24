@@ -22,7 +22,7 @@ commands:
     description: "save folder build"
     steps:
       - save_cache:
-          key: -v1-build{{ checksum "build" }}
+          key: -v1-build
           paths:
             - build
   restore-build-cache:
@@ -30,8 +30,8 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - -v1-build{{ checksum "build" }}
             - -v1-build
+
 jobs:
   # install task
   install:
