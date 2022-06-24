@@ -18,19 +18,7 @@ commands:
           keys:
             - -v2-{{ checksum "package-lock.json" }}
             - -v2-
-  save-build-cache:
-    description: "save folder build"
-    steps:
-      - save_cache:
-          key: -v1-build
-          paths:
-            - build
-  restore-build-cache:
-    description: "restore folder build"
-    steps:
-      - restore_cache:
-          keys:
-            - -v1-build
+
 
 jobs:
   # install task
@@ -66,16 +54,6 @@ jobs:
       - restore-npm-cache
       - run: npm run test
 
-  # build task
-  build:
-    docker:
-      - image: 'cimg/node:17.9.1'
-    steps:
-      - checkout 
-      - restore-npm-cache
-      - run: npm run build
-      - save-build-cache
-
 
   # Deploy with Surge task
   deploy:
@@ -85,7 +63,6 @@ jobs:
     steps:
       - checkout
       - restore-npm-cache
-      # - restore-build-cache
       - run: npm run build
       - run:
           name: Deploy to surge
@@ -107,6 +84,3 @@ workflows:
           requires:
             - eslint
             - unit-test
-      # - deploy:
-      #     requires:
-      #       - build
