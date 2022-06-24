@@ -27,6 +27,7 @@ jobs:
     # executors: core-executor
     steps:
       - checkout 
+      - restore-npm-cache
       - run: npm install
       - save-npm-cache
       - run: npm run test
@@ -59,10 +60,10 @@ jobs:
 workflows:
   build-and-deploy:
     jobs:
-      - build
-      - eslint:
+      - eslint
+      - build:
           requires:
-              - build
+              - eslint
       - deploy:
           requires:
               - eslint
