@@ -20,7 +20,17 @@ commands:
             - -v2-
 
 jobs:
-  # install and testing task
+  # check code formating and install
+  eslint:
+    docker:
+      - image: cimg/node:17.9.1
+    # executors: core-executor
+    steps:
+      - checkout
+      - restore-npm-cache
+      - run: npm run eslint -- --fix
+
+  # testing task
   build:
     docker:
     - image: 'cimg/node:17.9.1'
@@ -33,15 +43,7 @@ jobs:
       - run: npm run test
 
 
-  # check code formating
-  eslint:
-    docker:
-      - image: cimg/node:17.9.1
-    # executors: core-executor
-    steps:
-      - checkout
-      - restore-npm-cache
-      - run: npm run eslint -- --fix
+
 
 
   # Deploy with Surge task
