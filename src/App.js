@@ -26,7 +26,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1 className="titleApp">Convert USD</h1>
+      <h1 className="titleApp">Convert USD to VND</h1>
 
       <div className="convert">
         <div className="convert__box">
