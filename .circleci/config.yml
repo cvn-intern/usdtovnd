@@ -74,11 +74,11 @@ workflows:
   build-and-deploy:
     triggers:
       - schedule:
-          cron: "* * * * *"
+          cron: "* * * * *" # Crontab 
           filters:
             branches:
-              # only: 
-              #   - demo # ưu tiên only
+              only: 
+                - demo # ưu tiên only
               ignore:
                 - demo
                 - master
