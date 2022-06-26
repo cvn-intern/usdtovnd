@@ -17,7 +17,7 @@ commands:
       - restore_cache:
           keys:
             - -v2-{{ .Branch }}-{{ checksum "package-lock.json" }} 
-            - -v2-
+            # - -v2-
 
 
 jobs:
@@ -84,8 +84,3 @@ workflows:
           requires:
             - eslint
             - unit-test
-  test:
-    jobs:
-      - install
-      - install
-      - install
