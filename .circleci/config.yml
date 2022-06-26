@@ -74,6 +74,7 @@ workflows:
   build-and-deploy:
     triggers:
       - schedule:
+          cron: "* * * * *"
           filters:
             branches:
               # only: 
