@@ -8,7 +8,7 @@ commands:
     description: "save folder node modules"
     steps:
       - save_cache:
-          key: -v2-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          key: -v2-{{ .Branch }}-{{ checksum "package-lock.json" }} 
           paths:
             - node_modules
   restore-npm-cache:
@@ -17,7 +17,7 @@ commands:
       - restore_cache:
           keys:
             - -v2-{{ .Branch }}-{{ checksum "package-lock.json" }} 
-            # - -v2-
+            - -v2-
 
 
 jobs:
@@ -29,7 +29,7 @@ jobs:
       - checkout
       - restore-npm-cache
       - run: npm install
-      # - save-npm-cache
+      - save-npm-cache
     
 
   # check code formating
@@ -40,8 +40,8 @@ jobs:
     steps:
       - checkout
       - restore-npm-cache
-      # - run: npm run eslint
-      - run: npm run eslint -- --fix
+      - run: npm run eslint
+      # - run: npm run eslint -- --fix
 
 
   # testing task
@@ -72,6 +72,15 @@ jobs:
 
 workflows:
   build-and-deploy:
+    # triggers:
+    #   - schedule:
+    #       filters:
+    #         branches:
+    #           only: 
+    #             - demo # ưu tiên only
+    #           ignore:
+    #             - demo
+    #             - master
     jobs:
       - install
       - eslint:
@@ -84,3 +93,4 @@ workflows:
           requires:
             - eslint
             - unit-test
+  
