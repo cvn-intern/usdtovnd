@@ -72,15 +72,15 @@ jobs:
 
 workflows:
   build-and-deploy:
-    # triggers:
-    #   - schedule:
-    #       filters:
-    #         branches:
-    #           only: 
-    #             - demo # ưu tiên only
-    #           ignore:
-    #             - demo
-    #             - master
+    triggers:
+      - schedule:
+          filters:
+            branches:
+              # only: 
+              #   - demo # ưu tiên only
+              ignore:
+                - demo
+                - master
     jobs:
       - install
       - eslint:
