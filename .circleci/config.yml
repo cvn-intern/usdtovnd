@@ -82,10 +82,6 @@ workflows:
       - eslint:
           requires:
             - install
-          # filters: 
-          #   branches:
-          #     ignore:
-          #       - demo
       - unit-test:
           requires:
             - install
@@ -93,4 +89,8 @@ workflows:
           requires:
             - eslint
             - unit-test
+          # filters: 
+          #   branches:
+          #     only:
+          #       - master
   
