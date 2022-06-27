@@ -18,11 +18,11 @@ function App() {
   }
 
   function handleSubmit1(){
-    setVnd(usd*23.227);
+    setVnd(usd*23227);
   } 
 
   function handleSubmit2(){
-    setUsd(vnd/23.227);
+    setUsd(vnd/23227);
   } 
 
 
