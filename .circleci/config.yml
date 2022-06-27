@@ -73,15 +73,8 @@ jobs:
 workflows:
   build-and-deploy:
     triggers:
-      filters:
-        branches:
-          only: 
-            - demo # ưu tiên only
-          ignore:
-            - demo
-            - master
-      # - schedule:
-      #     # cron: "* * * * *" # Crontab 
+      # - schedule: 
+      #     cron: "* * * * *" # Crontab 
       #     filters:
       #       branches:
       #         only: 
@@ -94,6 +87,10 @@ workflows:
       - eslint:
           requires:
             - install
+          filter: 
+            branches:
+              ignore:
+                - demo
       - unit-test:
           requires:
             - install
