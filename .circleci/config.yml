@@ -3,8 +3,8 @@ commands:
   save-npm-cache:
     description: "save folder node modules"
     steps:
-      - save_cache:
-          key: -v2-{{ .Branch }}-{{ checksum "package-lock.json" }} 
+      - save_cache: # immutable 
+          key: -v2-{{ .Branch }}-{{ checksum "package-lock.json" }} # -v2-demo-12mkamsdkamwkm
           paths:
             - node_modules
   restore-npm-cache:
