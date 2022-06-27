@@ -56,10 +56,12 @@ jobs:
     steps:
       - checkout
       - restore-npm-cache
-      - run: npm run build
+      # - run: npm run build
       - run:
           name: Deploy to surge
-          command: ./node_modules/surge/lib/cli.js --project ./build --domain bozuman-usdtovnd.surge.sh
+          command: |
+            npm run build
+            ./node_modules/surge/lib/cli.js --project ./build --domain bozuman-usdtovnd.surge.sh
 
 
 
