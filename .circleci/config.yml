@@ -1,14 +1,10 @@
 version: 2.1
-# executors:
-#   core-executor:
-#     docker:
-#       - image: 'cimg/node:17.9.1'
 commands:
   save-npm-cache:
     description: "save folder node modules"
     steps:
-      - save_cache:
-          key: -v2-
+      - save_cache: # immutable 
+          key: -v2-{{ .Branch }}-{{ checksum "package-lock.json" }} # -v2-demo-12mkamsdkamwkm
           paths:
             - node_modules
   restore-npm-cache:
@@ -16,29 +12,37 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - -v2-{{ checksum "package-lock.json" }}
+            - -v2-{{ .Branch }}-{{ checksum "package-lock.json" }} 
             - -v2-
 
+
 jobs:
-  # check code formating and install
-  eslint:
+  # install task
+  install:
     docker:
       - image: cimg/node:17.9.1
-    # executors: core-executor
     steps:
       - checkout
       - restore-npm-cache
       - run: npm install
       - save-npm-cache
+    
+
+  # check code formating
+  eslint:
+    docker:
+      - image: cimg/node:17.9.1
+    steps:
+      - checkout
+      - restore-npm-cache
       - run: npm run eslint
       # - run: npm run eslint -- --fix
 
 
   # testing task
-  build:
+  unit-test:
     docker:
-    - image: 'cimg/node:17.9.1'
-    # executors: core-executor
+      - image: 'cimg/node:17.9.1'
     steps:
       - checkout 
       - restore-npm-cache
@@ -47,24 +51,46 @@ jobs:
 
   # Deploy with Surge task
   deploy:
-    docker:
+    docker: # executor
       - image: cimg/node:17.9.1
-    # executors: core-executor
     steps:
       - checkout
-      - restore-npm-cache
-      - run: npm run build
-      - run: ./node_modules/surge/lib/cli.js --project ./build --domain bozuman-usdtovnd.surge.sh
+      - restore-npm-cache 
+      # - run: npm run build
+      - run:
+          name: Deploy to surge
+          command: |
+            npm run build
+            ./node_modules/surge/lib/cli.js --project ./build --domain bozuman-usdtovnd.surge.sh
 
 
 
 workflows:
   build-and-deploy:
+    triggers:
+      # - schedule: 
+      #     cron: "* * * * *" # Crontab 
+      #     filters:
+      #       branches:
+      #         only: 
+      #           - demo # ưu tiên only
+      #         ignore:
+      #           - demo
+      #           - master
     jobs:
-      - eslint
-      - build:
+      - install
+      - eslint:
           requires:
-              - eslint
+            - install
+      - unit-test:
+          requires:
+            - install
       - deploy:
           requires:
-              - build
+            - eslint
+            - unit-test
+          filters: 
+            branches:
+              only:
+                - master
+  
