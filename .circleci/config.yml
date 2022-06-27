@@ -1,8 +1,4 @@
 version: 2.1
-# executors:
-#   core-executor:
-#     docker:
-#       - image: 'cimg/node:17.9.1'
 commands:
   save-npm-cache:
     description: "save folder node modules"
@@ -36,7 +32,6 @@ jobs:
   eslint:
     docker:
       - image: cimg/node:17.9.1
-    # executors: core-executor
     steps:
       - checkout
       - restore-npm-cache
@@ -48,7 +43,6 @@ jobs:
   unit-test:
     docker:
       - image: 'cimg/node:17.9.1'
-    # executors: core-executor
     steps:
       - checkout 
       - restore-npm-cache
@@ -59,7 +53,6 @@ jobs:
   deploy:
     docker:
       - image: cimg/node:17.9.1
-    # executors: core-executor
     steps:
       - checkout
       - restore-npm-cache
@@ -87,10 +80,10 @@ workflows:
       - eslint:
           requires:
             - install
-          filters: 
-            branches:
-              ignore:
-                - demo
+          # filters: 
+          #   branches:
+          #     ignore:
+          #       - demo
       - unit-test:
           requires:
             - install
