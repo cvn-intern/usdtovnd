@@ -51,11 +51,11 @@ jobs:
 
   # Deploy with Surge task
   deploy:
-    docker:
+    docker: # executor
       - image: cimg/node:17.9.1
     steps:
       - checkout
-      - restore-npm-cache
+      - restore-npm-cache 
       # - run: npm run build
       - run:
           name: Deploy to surge
@@ -89,8 +89,8 @@ workflows:
           requires:
             - eslint
             - unit-test
-          # filters: 
-          #   branches:
-          #     only:
-          #       - master
+          filters: 
+            branches:
+              only:
+                - master
   
