@@ -87,7 +87,7 @@ workflows:
       - eslint:
           requires:
             - install
-          filter: 
+          filters: 
             branches:
               ignore:
                 - demo
